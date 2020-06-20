@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Rem</title>
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!-- JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+
+      body {
+        background: #0F2027;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to bottom, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .container {
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        background-color: #0003;
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0px 0px 2px white;
+      }
+      .container h1 {
+        font-family: 'Sacramento', cursive;
+        text-align: center;
+        font-size: 4em;
+      }
+    </style>
+  
+  </head>
+  <body>
+    <div class="container">
+      <h1>Rembook</h1>
+      {% if error %}
+          <div class="alert alert-danger" role="alert">
+              {{ error }}
+          </div>
+      {% endif %}
+      <form action="generate" method="POST">
+          <div class="form-group">
+              <label for="email">Email address</label>
+              <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary">Download</button>
+          <small id="emailHelp" class="form-text text-muted">This will take upto 30 seconds, please be patient.</small>
+      </form>
+    </div>
+  </body>
+</html>
