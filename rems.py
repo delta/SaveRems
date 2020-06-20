@@ -16,6 +16,14 @@ def main():
     email = args.email
     password = args.password
 
+    user_details = get_user_details(email, password)
+
+    memories = get_memories(user_details)
+
+    user_id = get_rem(user_details, memories)
+
+def get_user_details(email, password):
+
     login_request = requests.post(
         base_url + login,
         data = {
@@ -24,7 +32,9 @@ def main():
         }
     )
 
-    user_details = login_request.json()
+    return login_request.json()
+
+def get_memories(user_details):
 
     memory_request = requests.post(
         base_url + my_memories,
@@ -33,14 +43,12 @@ def main():
         }
     )
 
-    memories = memory_request.json()
-
-    renderTemplate(user_details, memories)
+    return memory_request.json()
 
 
-def renderTemplate(user_details, memories):
+def get_rem(user_details, memories):
     env = Environment(
-        loader = FileSystemLoader(searchpath="./template/"),
+        loader = FileSystemLoader(searchpath="./templates/"),
         autoescape = select_autoescape(['html', 'xml'])
     )
 
@@ -48,12 +56,17 @@ def renderTemplate(user_details, memories):
     template = env.get_template(TEMPLATE_FILE)
 
     output = template.render(user_details=user_details, memories=memories)
+    print(user_details)
+    
+    user_id = user_details['_id']
 
-    html_file = open('./output/my_rem.html', 'w')
+    html_file = open(f'./output/html/{user_id}.html', 'w')
     html_file.write(output)
     html_file.close()
 
-    pdfkit.from_file('./output/my_rem.html', './output/my_rem.pdf')
+    pdfkit.from_file(f'./output/html/{user_id}.html', f'./output/pdf/{user_id}.pdf')
+
+    return user_id
 
 if __name__=="__main__":
     main()
