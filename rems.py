@@ -2,6 +2,7 @@ import argparse
 import requests
 from jinja2 import Environment, PackageLoader, select_autoescape, FileSystemLoader
 import pdfkit
+from dateutil.parser import parse
 
 base_url = "https://rembook.nitt.edu/api/"
 login = "login"
@@ -36,6 +37,10 @@ def get_user_details(email, password):
 
 def get_memories(user_details):
 
+    if user_details['dob']:
+        user_details['dob'] = parse(user_details['dob'])
+        user_details['dob'] = user_details['dob'].date()
+    
     memory_request = requests.post(
         base_url + my_memories,
         data = {
