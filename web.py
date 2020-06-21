@@ -25,9 +25,8 @@ def generate():
     # Login user
     user_details = get_user_details(email, password)
     user_details_response = user_details.get('message', 'SUCCESS')
-    if user_details_response == 'User not found' or \
-        user_details_response == 'Webmail Credentials Invalid':
-        return render_template('index.html', error='User not found')
+    if user_details_response != 'SUCCESS':
+        return render_template('index.html', error=user_details_response)
 
     # Get memories
     memories = get_memories(user_details)
@@ -36,4 +35,4 @@ def generate():
     user_id = get_rem(user_details, memories)
     
     # Send pdf
-    return send_file(os.getcwd() + f'/output/pdf/{user_id}.pdf')
+    return send_file(os.getcwd() + '/output/pdf/' + user_id + '.pdf')

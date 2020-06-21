@@ -9,7 +9,7 @@
 `pip3 install -r requirements.txt`
 
 3. Create Output Directory
-`mkdir output && mkdir output/html && mkdir output/css`
+`mkdir output && mkdir output/html && mkdir output/pdf`
 
 4. Install [wkhtmltopdf](https://wkhtmltopdf.org/)
 

@@ -57,7 +57,7 @@ def get_rem(user_details, memories):
         autoescape = select_autoescape(['html', 'xml'])
     )
 
-    TEMPLATE_FILE = "template.html"
+    TEMPLATE_FILE = "template_modified.html"
     template = env.get_template(TEMPLATE_FILE)
 
     output = template.render(user_details=user_details, memories=memories)
@@ -65,11 +65,11 @@ def get_rem(user_details, memories):
     
     user_id = user_details['_id']
 
-    html_file = open(f'./output/html/{user_id}.html', 'w')
+    html_file = open('./output/html/' + user_id + '.html', 'w')
     html_file.write(output)
     html_file.close()
 
-    pdfkit.from_file(f'./output/html/{user_id}.html', f'./output/pdf/{user_id}.pdf')
+    pdfkit.from_file('./output/html/' + user_id + '.html', './output/pdf/' + user_id + '.pdf')
 
     return user_id
 

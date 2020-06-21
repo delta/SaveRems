@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>My Rem</title>
+
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+
+    <style type="text/css" media="screen,print">
+      body{
+        background: #FFFFFF;
+        font-family: 'Lato', sans-serif;
+      }
+      #title {
+        font-size: 5rem;
+        font-family: 'Sacramento', cursive;
+        font-weight: bold;
+        margin-top: 32px;
+        margin-bottom: 32px;
+        color: #005d61;
+      }
+      i {
+        font-style: normal;
+      }
+      .card {
+        padding: 10px;
+      }
+      .card-header{
+        font-weight: bold;
+        font-size: 2rem;
+      }
+      .card h1.card-title {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      .card-text{
+        color: #000000;
+        font-size: 1.5rem;
+      }
+      .new-page {
+        page-break-before: always;
+      }
+      .question .card-text {
+        font-weight: bold;
+        margin-top: 1rem;
+      }
+      .answer {
+        font-size: 1.3rem;
+      }
+      .temp img {
+        width: auto;
+        height: 100%;
+      }
+      .temp {
+        padding: 15px;
+        height: 400px;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
+      }
+      .answer {
+        margin-bottom: 1px;
+      }
+      .question {
+        font-size: 1rem;
+      }
+      .profile {
+        font-size: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 id="title" class="text-center">My Rembook</h1>
+      <div class="row">
+        <div class="card mx-auto" style="width: 35rem;">
+          <img src="https://rembook.nitt.edu/api/assets/images/profiles/{{user_details.image}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h1 class="card-title">{{ user_details.name }} | {{ user_details.rollNo }}</h1>
+            <p class="card-text"><i class="fas fa-envelope"></i> {{ user_details.email }}</p>
+            <p class="card-text"><i class="fas fa-graduation-cap"></i> {{ user_details.department }}</p>
+            <p class="card-text"><i class="fas fa-birthday-cake"></i> {{ user_details.dob }}</p>
+            <p class="card-text"><i class="fas fa-phone"></i> {{ user_details.contact }}</p>
+            <p class="card-text">
+              <i class="fa fa-home"></i>
+              {% for hostel in user_details.hostels %}  
+              {{ hostel }}
+              {% endfor %}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      {% for mem in memories %}
+        <div class="new-page">
+          <div class="card mx-auto">
+            <div class="card-header">
+              {% if mem.fromName %}
+                {{ mem.fromName }}
+              {% else %}
+                {{ mem.from }}
+              {% endif %}
+            </div>
+            {% if mem.imagePath %}
+              {% set image_path = "https://rembook.nitt.edu/api/assets/images/memories/" + mem.imagePath + ".jpg" %}
+              <div class="temp">
+                <img src="{{ image_path }}" class="img-rounded img-responsive card-img-top" alt="Responsive image">
+              </div>
+            {% else %}
+              <div class="temp">
+                <img src="https://rembook.nitt.edu/api/assets/images/memories/profilepic_temp.jpg"
+                  class="img-rounded img-responsive card-img-top" alt="Responsive image">
+              </div>
+            {% endif %}
+            <div class="card-body">
+                {% for question in mem.questions %}
+                    <div class="row question">
+                        <p class="card-text">
+                        <i class="fa fa-comments-o" aria-hidden="true"></i>
+                        {{ question }}
+                        </p>
+                    </div>
+                    <div class="row">
+                      <p class="ml-5 answer">
+                        {{ mem.answers[loop.index0] }}
+                      </p>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
