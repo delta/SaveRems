@@ -31,9 +31,16 @@
         margin-bottom: 32px;
         color: #005d61;
       }
-      img {
-        padding: 45px;
-        padding-bottom: 10px;
+      .temp img {
+        width: auto;
+        height: 100%;
+      }
+      .temp {
+        padding: 15px;
+        height: 400px;
+        width: 100%;
+        text-align: center;
+        overflow: hidden;
       }
       .card-header, .card-title {
         font-size: 2.2rem;
@@ -60,7 +67,9 @@
         <div class="card-header">
           About Me
         </div>
-        <img src="https://rembook.nitt.edu/api/assets/images/profiles/{{user_details.image}}" class="card-img-top" alt="..." height="450">
+        <div class="temp">
+          <img src="https://rembook.nitt.edu/api/assets/images/profiles/{{user_details.image}}" class="card-img-top" alt="...">
+        </div>
         <div class="card-body profile">
           <h5 class="card-title">{{ user_details.name }} | {{ user_details.rollNo }}</h5>
           <p class="card-text"><i class="fas fa-envelope"></i>  {{ user_details.email }}</p>
@@ -89,9 +98,14 @@
               </div>
               {% if mem.imagePath %}
                 {% set image_path = "https://rembook.nitt.edu/api/assets/images/memories/" + mem.imagePath + ".jpg" %}
-                <img src="{{ image_path }}" class="img-rounded img-responsive card-img-top" alt="Responsive image" height="550">
+                <div class="temp">
+                  <img src="{{ image_path }}" class="img-rounded img-responsive card-img-top" alt="Responsive image">
+                </div>
               {% else %}
-                <img src="https://rembook.nitt.edu/api/assets/images/memories/profilepic_temp.jpg" class="img-rounded img-responsive card-img-top" alt="Responsive image" height="450">
+                <div class="temp">
+                  <img src="https://rembook.nitt.edu/api/assets/images/memories/profilepic_temp.jpg"
+                    class="img-rounded img-responsive card-img-top" alt="Responsive image">
+                </div>
               {% endif %}
               <div class="card-body">
                 <ul class="list-group list-group-flush">
