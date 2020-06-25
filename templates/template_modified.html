@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
 
+    <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>
+
     <style type="text/css" media="screen,print">
       body{
         background: #FFFFFF;
@@ -73,6 +75,12 @@
       }
       .profile {
         font-size: 2rem;
+      }
+      img.emoji {
+        height: 1em;
+        width: 1em;
+        margin: 0 .05em 0 .1em;
+        vertical-align: -0.1em;
       }
     </style>
   </head>
@@ -142,4 +150,5 @@
       {% endfor %}
     </div>
   </body>
+  <script>window.onload = function () { twemoji.parse(document.body);}</script>
 </html>
