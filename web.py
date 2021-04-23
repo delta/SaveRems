@@ -1,10 +1,12 @@
 import os
 
 from flask import Flask, request, jsonify, make_response, send_file, render_template
-
-from rems import get_user_details, get_memories, get_rem
+from flask_cors import CORS, cross_origin
+from rems import get_user_details, get_memories, get_rem,get_b64_rem
 
 app = Flask(__name__)
+cors = CORS(app,resources={r"/getPdf": {"origins": ["https://rembook.nitt.edu","http://localhost:*"]}})
+
 
 @app.route('/', methods=['GET'])
 def rem_form():
@@ -36,3 +38,13 @@ def generate():
     
     # Send pdf
     return send_file(os.getcwd() + '/output/pdf/' + user_id + '.pdf')
+
+@app.route('/getPdf', methods=['POST'])
+def getPdf():
+    # # Login user
+    user_details = request.json
+
+    # Get memories
+    memories = get_memories(user_details)
+    # Send pdf
+    return get_b64_rem(user_details, memories)

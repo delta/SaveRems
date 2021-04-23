@@ -3,6 +3,7 @@ import requests
 from jinja2 import Environment, PackageLoader, select_autoescape, FileSystemLoader
 import pdfkit
 from dateutil.parser import parse
+import base64
 
 base_url = "https://rembook.nitt.edu/api/"
 login = "login"
@@ -61,7 +62,25 @@ def get_rem(user_details, memories):
     template = env.get_template(TEMPLATE_FILE)
 
     output = template.render(user_details=user_details, memories=memories)
-    print(user_details)
+        
+    user_id = user_details['_id']
+
+    html_file = open('./output/html/' + user_id + '.html', 'w')
+    html_file.write(output)
+    html_file.close()
+
+    pdfkit.from_file('./output/html/' + user_id + '.html', './output/pdf/' + user_id + '.pdf')
+    return user_id
+
+def get_b64_rem(user_details, memories):
+    env = Environment(
+        loader = FileSystemLoader(searchpath="./templates/"),
+        autoescape = select_autoescape(['html', 'xml'])
+    )
+    TEMPLATE_FILE = "template_modified.html"
+    template = env.get_template(TEMPLATE_FILE)
+
+    output = template.render(user_details=user_details, memories=memories)
     
     user_id = user_details['_id']
 
@@ -70,8 +89,10 @@ def get_rem(user_details, memories):
     html_file.close()
 
     pdfkit.from_file('./output/html/' + user_id + '.html', './output/pdf/' + user_id + '.pdf')
+    with open('./output/pdf/' + user_id + '.pdf', "rb") as pdf_file:
+        encoded_string = base64.b64encode(pdf_file.read())
 
-    return user_id
+    return encoded_string
 
 if __name__=="__main__":
     main()
